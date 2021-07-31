@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
             fireTimer += dt;
         }
 
-        if(transform.position.y < -6.5f)
+        if(Camera.main.WorldToScreenPoint(transform.position).y < 0)
         {
             Destroy(gameObject);
         }
