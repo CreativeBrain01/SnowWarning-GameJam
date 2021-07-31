@@ -529,8 +529,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  jumpForce: 10
+  jumpForce: 500
   lightProjectile: {fileID: 7730327694615583468, guid: 752cf76ec2a879744b03c4b706f4da2d, type: 3}
+  fireRate: 0.8
 --- !u!61 &834211498
 BoxCollider2D:
   m_ObjectHideFlags: 0

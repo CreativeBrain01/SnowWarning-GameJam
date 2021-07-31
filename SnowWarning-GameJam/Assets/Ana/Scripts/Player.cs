@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public float speed;
     public float jumpForce;
     public GameObject lightProjectile;
+    public float fireRate;
+    float fireTimer;
     GameObject curLight;
     Vector2 input;
     Vector3 velocity;
@@ -19,6 +21,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerControls = new PlayerControls();
+        fireTimer = fireRate;
     }
 
     private void Start()
@@ -28,11 +31,20 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        velocity.y = input.y * jumpForce;
         velocity.x = input.x * speed;
         transform.Translate(velocity * dt);
 
         velocity = Vector2.zero;
+
+        if(fireTimer < fireRate)
+        {
+            fireTimer += dt;
+        }
+
+        if(transform.position.y < -6.5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -42,19 +54,19 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        input.y = context.ReadValueAsButton() ? 1 : 0;
+        if (context.action.triggered)
+        {
+            GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
+        }
     }
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        if (context.action.triggered && fireTimer >= fireRate)
         {
-            if(curLight != null)
-            {
-                Destroy(curLight);
-            }
             curLight = Instantiate(lightProjectile, transform.position, Quaternion.identity);
             curLight.GetComponent<ShootLight>().destination = mousePos;
+            fireTimer = 0;
         }
     }
 
