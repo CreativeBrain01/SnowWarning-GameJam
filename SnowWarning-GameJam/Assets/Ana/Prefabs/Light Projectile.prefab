@@ -59,7 +59,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0.4
-  m_PointLightOuterRadius: 2.5
+  m_PointLightOuterRadius: 3.5
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {x: 0, y: 0}
-  diminishRate: 1
+  diminishRate: 0.5
   speed: 2.5
 --- !u!58 &-2451134548460283841
 CircleCollider2D:

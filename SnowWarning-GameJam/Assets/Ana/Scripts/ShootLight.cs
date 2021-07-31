@@ -34,6 +34,10 @@ public class ShootLight : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
         transform.position = Vector2.Lerp(transform.position, destination, speed * Time.deltaTime);
     }
 
