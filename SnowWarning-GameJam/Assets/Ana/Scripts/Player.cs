@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (playerControls.Player.Light.triggered)
+        if (context.ReadValueAsButton())
         {
             if(curLight != null)
             {
