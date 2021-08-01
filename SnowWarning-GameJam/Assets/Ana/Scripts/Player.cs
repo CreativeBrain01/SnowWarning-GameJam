@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.play) return;
+
         if(fireTimer < fireRate)
         {
             fireTimer += dt;
@@ -74,19 +76,30 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.play) return;
+
         velocity.x = input.x * speed;
         transform.Translate(velocity * dt);
 
         velocity = Vector2.zero;
     }
 
+    public void OnDestroy()
+    {
+        GameManager.state = GameManager.eState.PlayerDead;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!GameManager.play) return;
+
         input.x = context.ReadValue<Vector2>().x;
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (!GameManager.play) return;
+
         if (context.action.triggered && canJump)
         {
             if(rb.IsTouchingLayers(LayerMask.GetMask("WallRight")))
@@ -106,6 +119,8 @@ public class Player : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
+        if (!GameManager.play) return;
+
         if (context.action.triggered && fireTimer >= fireRate)
         {
             curLight = Instantiate(lightProjectile, transform.position, Quaternion.identity);
