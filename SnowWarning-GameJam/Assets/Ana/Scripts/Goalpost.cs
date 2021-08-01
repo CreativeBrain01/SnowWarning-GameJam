@@ -13,7 +13,7 @@ public class Goalpost : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Finished");
+            GameManager.state = GameManager.eState.LevelEnd;
         }
     }
 }

@@ -10,6 +10,9 @@ public class ShootLight : MonoBehaviour
 
     public float diminishRate;
 
+    public float lifeTime = 2;
+    float timer = 0;
+
     [SerializeField] 
     [Tooltip("Affects the rate of interpolation of the projectile's movement")] float speed;
 
@@ -25,7 +28,11 @@ public class ShootLight : MonoBehaviour
     {
         if(((Vector2)transform.position - destination).magnitude < 0.1)
         {
-            if(light.intensity > 0)
+            if (timer < lifeTime)
+            {
+                timer += Time.deltaTime;
+            }
+            else if(light.intensity > 0)
             {
                 light.intensity -= diminishRate * Time.deltaTime;
             }
