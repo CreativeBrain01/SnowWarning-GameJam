@@ -100,19 +100,20 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.play) return;
 
-        if (context.action.triggered && canJump)
+        if (context.action.triggered)
         {
-            if(rb.IsTouchingLayers(LayerMask.GetMask("WallRight")))
+            if (rb.IsTouchingLayers(LayerMask.GetMask("Terrain")) && canJump)
+            {
+                rb.AddForce(Vector2.up * jumpForce);
+                canJump = false;
+            }
+            else if(rb.IsTouchingLayers(LayerMask.GetMask("WallRight")))
             {
                 rb.AddForce(new Vector2 (0.75f, 0.75f) * jumpForce);
             }
             else if (rb.IsTouchingLayers(LayerMask.GetMask("WallLeft")))
             {
                 rb.AddForce(new Vector2(-0.75f, 0.75f) * jumpForce);
-            }
-            else
-            {
-                rb.AddForce(Vector2.up * jumpForce);
             }
         }
     }
