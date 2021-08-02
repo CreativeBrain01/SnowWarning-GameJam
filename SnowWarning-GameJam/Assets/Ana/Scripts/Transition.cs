@@ -22,5 +22,6 @@ public class Transition : MonoBehaviour
         }
         yield return new WaitUntil(() => sprite.color.a == 0);
         anim.SetBool("Fade", false);
+        GameManager.state = GameManager.eState.LevelStart;
     }
 }

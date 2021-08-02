@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
         LevelStart,
         Level,
         PlayerDead,
-        LevelEnd
+        LevelEnd,
+        Transition
     }
 
     public static eState state { get; set; } = eState.Level;
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour
     public GameObject transition;
 
     public static bool play;
+
+    public bool spawnPlayer;
 
     private void Awake()
     {
@@ -72,19 +75,27 @@ public class GameManager : MonoBehaviour
                 break;
             case eState.PlayerDead:
                 Time.timeScale = 1;
-                play = false;
-                StartCoroutine(transition.GetComponent<Transition>().FadeIn());
-                state = eState.LevelStart;
+                if (spawnPlayer)
+                {
+                    play = false;
+                    StartCoroutine(transition.GetComponent<Transition>().FadeIn());
+                    state = eState.Transition;
+                }
                 break;
             case eState.LevelEnd:
                 Time.timeScale = 1;
+                spawnPlayer = false;
+                play = false;
                 StartCoroutine(transition.GetComponent<Transition>().FadeIn(nextIndex));
-                state = eState.LevelStart;
+                state = eState.Transition;
+                break;
+            case eState.Transition:
                 break;
             default:
                 break;
         }
     }
+
 
     public void RespawnPlayer()
     {
