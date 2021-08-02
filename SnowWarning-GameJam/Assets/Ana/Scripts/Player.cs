@@ -8,14 +8,21 @@ public class Player : MonoBehaviour
     public float speed;
     public float jumpForce;
     public GameObject lightProjectile;
+
+    public EdgeCollider2D floorCollider;
+    public EdgeCollider2D rightCollider;
+    public EdgeCollider2D leftCollider;
+
     public float fireRate;
     float fireTimer;
     GameObject curLight;
     Vector2 input;
     Vector3 velocity;
+
     Vector2 mousePos { get => Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); }
 
     Rigidbody2D rb;
+    Animator anim;
 
     public bool canJump;
 
@@ -35,11 +42,18 @@ public class Player : MonoBehaviour
     {
         GetComponent<PlayerInput>().onActionTriggered += HandleAction;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
         if (!GameManager.play) return;
+
+        if (input.x == 0)
+        {
+            anim.SetBool("Run", false);
+        }
+        anim.SetFloat("Velocity", rb.velocity.y);
 
         if(fireTimer < fireRate)
         {
@@ -81,6 +95,11 @@ public class Player : MonoBehaviour
         velocity.x = input.x * speed;
         transform.Translate(velocity * dt);
 
+        if(rb.velocity.magnitude > jumpForce * 1.5f)
+        {
+            rb.velocity = rb.velocity.normalized * jumpForce * 1.5f;
+        }
+
         velocity = Vector2.zero;
     }
 
@@ -94,6 +113,15 @@ public class Player : MonoBehaviour
         if (!GameManager.play) return;
 
         input.x = context.ReadValue<Vector2>().x;
+        anim.SetBool("Run", true);
+        if(input.x < 0)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
+        else if(input.x > 0)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -102,16 +130,16 @@ public class Player : MonoBehaviour
 
         if (context.action.triggered)
         {
-            if (rb.IsTouchingLayers(LayerMask.GetMask("Terrain")) && canJump)
+            if (floorCollider.IsTouchingLayers(LayerMask.GetMask("Terrain")) && canJump)
             {
                 rb.AddForce(Vector2.up * jumpForce);
                 canJump = false;
             }
-            else if(rb.IsTouchingLayers(LayerMask.GetMask("WallRight")))
+            else if(leftCollider.IsTouchingLayers(LayerMask.GetMask("Terrain")))
             {
                 rb.AddForce(new Vector2 (0.75f, 0.75f) * jumpForce);
             }
-            else if (rb.IsTouchingLayers(LayerMask.GetMask("WallLeft")))
+            else if (rightCollider.IsTouchingLayers(LayerMask.GetMask("Terrain")))
             {
                 rb.AddForce(new Vector2(-0.75f, 0.75f) * jumpForce);
             }

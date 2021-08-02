@@ -932,6 +932,10 @@ PrefabInstance:
       propertyPath: transition
       value: 
       objectReference: {fileID: 219346662}
+    - target: {fileID: 883990479932460940, guid: 696311ffc8f1f56429f225e2d4fa08e6, type: 3}
+      propertyPath: spawnPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 883990479932460941, guid: 696311ffc8f1f56429f225e2d4fa08e6, type: 3}
       propertyPath: m_Name
       value: GameManager
