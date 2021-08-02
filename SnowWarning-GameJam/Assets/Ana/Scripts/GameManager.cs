@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
                 break;
             case eState.LevelStart:
                 Time.timeScale = 1;
+                spawnPlayer = true;
                 if(FindObjectOfType<Player>() != null)
                 {
                     state = eState.Level;
