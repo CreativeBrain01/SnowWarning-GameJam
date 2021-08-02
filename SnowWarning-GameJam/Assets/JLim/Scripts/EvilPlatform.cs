@@ -9,7 +9,7 @@ public class EvilPlatform : MonoBehaviour
     {
         if(collision.collider.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.collider.gameObject);
+            Destroy(collision.collider.gameObject.transform.parent.gameObject);
         }
     }
 
