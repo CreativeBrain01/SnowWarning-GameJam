@@ -10,6 +10,7 @@ class SceneController : MonoBehaviour
     public int sceneSection = 0;
     public TMP_Text sceneText;
     private MenuController menuController;
+    private GameController gameController;
     public Sprite[] images;
     public bool once = false;
     private bool gameOver = false;
@@ -21,8 +22,9 @@ class SceneController : MonoBehaviour
     public void Start()
     {
         //First scene
-        sceneText.text = "Init Scene Text";
+        sceneText.text = "You were minding your own bussiness as an average wayfarer.";
         menuController = GameObject.Find("MenuController").GetComponent<MenuController>();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
     private void Update()
@@ -30,6 +32,7 @@ class SceneController : MonoBehaviour
         if (once == true)
         {
             GameObject.Find("ScenePanel").GetComponent<Image>().sprite = images[0];
+            sceneText.text = "You were minding your own bussiness as an average wayfarer.";
             once = false;
         }
     }
@@ -51,25 +54,33 @@ class SceneController : MonoBehaviour
          * Reenable scenes: menuController.ScenePanel.SetActive(true);
          * Reset application: gameOver = true;
          */
+        sceneSection++;
 
         if (gameOver != true)
         {
             switch (sceneSection)
             {
                 case 1:
-                    sceneText.text = "Initial scene goes here";
+                    sceneText.text = "One day something changed that would gravely change how you see the world around you.";
                     break;
                 case 2:
-                    sceneText.text = "Scene text goes here";
+                    GameObject.Find("ScenePanel").GetComponent<Image>().sprite = images[1];
+                    sceneText.text = "An evil witch had appeared before you & had offered you the knowledge of the universe.";
                     break;
                 case 3:
-                    sceneText.text = "Scene text goes here";
+                    sceneText.text = "You made the great mistake of trusting her & moments later you went nearly blind, an immensive dark fog now surrounds you.";
                     break;
                 case 4:
-                    sceneText.text = "Scene text goes here";
+                    GameObject.Find("ScenePanel").GetComponent<Image>().sprite = images[2];
+                    sceneText.text = "After this terrible encounter, you had finally found a great magical stick that could let you finally see through the darkness";
                     break;
                 case 5:
-                    sceneText.text = "Scene text goes here";
+                    sceneText.text = "You now go onwards to get back at the witch & regain your sight back!";
+                    break;
+                case 6:
+                    sceneText.text = "";
+                    menuController.ScenePanel.SetActive(false);
+                    gameController.loadlevel1();
                     break;
                 default:
                     sceneText.text = "[Text Failure] \n Scene section: " + sceneSection + "\n Scenes section does not exist.";

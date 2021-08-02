@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     Vector2 input;
     Vector3 velocity;
     Vector2 mousePos { get => Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()); }
+    private MenuController menuController;
 
     Rigidbody2D rb;
 
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        menuController = GameObject.Find("MenuController").GetComponent<MenuController>();
         playerControls = new PlayerControls();
         fireTimer = fireRate;
     }
@@ -87,6 +89,15 @@ public class Player : MonoBehaviour
     public void OnDestroy()
     {
         GameManager.state = GameManager.eState.PlayerDead;
+    }
+
+    public void onPause(InputAction.CallbackContext context)
+    {
+        if (context.action.triggered)
+        {
+            Debug.Log("Button Pressed");
+            menuController.Pause();
+        }   
     }
 
     public void OnMove(InputAction.CallbackContext context)

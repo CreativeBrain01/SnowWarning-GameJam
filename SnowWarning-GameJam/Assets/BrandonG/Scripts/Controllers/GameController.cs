@@ -47,9 +47,9 @@ public class GameController : MonoBehaviour
     #endregion
 
 
-
     //[Header("Editable values")]
     public eState state = eState.TITLE;
+    public GameObject uiObj;
 
     //Dont touch these variables:
     bool forceOnce = true;
@@ -58,10 +58,15 @@ public class GameController : MonoBehaviour
     //Could cause issues here:
     private MenuController menuController;
 
+
     void Start()
     {
         sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
         menuController = GameObject.Find("MenuController").GetComponent<MenuController>();
+        DontDestroyOnLoad(sceneController);
+        DontDestroyOnLoad(menuController);
+        DontDestroyOnLoad(uiObj);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -97,6 +102,8 @@ public class GameController : MonoBehaviour
     {
         //Go to the next section/panel based on position
         //Use scene section int in an if/switch to progress
+        sceneController.sceneSection++;
+        Debug.Log("Next button pressed");
     }
 
     private void EndGameScene()
@@ -104,6 +111,83 @@ public class GameController : MonoBehaviour
         //Goes to the final panel for the game over
         sceneController.sceneSection++;
     }
+
+    public void loadlevel1()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level1");
+        menuController.Disable();
+    }
+    public void loadlevel2()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level2");
+        menuController.Disable();
+    }
+    public void loadlevel3()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level3");
+        menuController.Disable();
+    }
+    public void loadlevel4()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level4");
+        menuController.Disable();
+    }
+    public void loadlevel5()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level5");
+        menuController.Disable();
+    }
+    public void loadlevel6()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level6");
+        menuController.Disable();
+    }
+    public void loadlevel7()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level7");
+        menuController.Disable();
+    }
+    public void loadlevel8()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level8");
+        menuController.Disable();
+    }
+    public void loadlevel9()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level9");
+        menuController.Disable();
+    }
+    public void loadlevel10()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level10");
+        menuController.Disable();
+    }
+    public void loadlevel11()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level11");
+        menuController.Disable();
+    }
+    public void loadlevel12()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level12");
+        menuController.Disable();
+    }
+    public void loadlevel13()
+    {
+        GameController.Instance.state = eState.GAME;
+        SceneManager.LoadScene("Level13");
+        menuController.Disable();
+    }
 }
-
-

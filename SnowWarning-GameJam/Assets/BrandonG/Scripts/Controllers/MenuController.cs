@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
@@ -25,6 +26,7 @@ public class MenuController : MonoBehaviour
     private AudioController audioController;
     private SceneController sceneController;
     private int playing;
+    public GameObject EventSystem;
 
     private void Start()
     {
@@ -250,9 +252,21 @@ public class MenuController : MonoBehaviour
         else mixer.SetFloat("MST", 0);
     }
 
+    
+
+    public void LevelSelect()
+    {
+        Disable();
+        LevelSelectPanel.SetActive(true);
+        GameController.Instance.state = eState.MENU;
+    }
+
     public void ResetApplication()
     {
-        SceneManager.LoadScene("Main");
+        //Destroy event system
+        EventSystem.SetActive(false);
+        SceneManager.LoadScene("Menus");
+        sceneController.sceneSection = 0;
     }
 
     public void ExitGame()
